@@ -26,5 +26,10 @@ namespace Project_Gym
         {
             this.Hide();
         }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
