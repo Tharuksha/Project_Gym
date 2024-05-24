@@ -33,20 +33,7 @@ namespace Project_Gym
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            txt_fname.Clear();
-            txt_lname.Clear();
-            txt_address.Clear();
-            txt_email.Clear();
-            txt_num.Clear();
-            txt_weight.Clear();
-            txt_height.Clear();
-
-            btn_male.Checked = false;
-            btn_female.Checked = false;
-
-            m_comboBox.ResetText();
-            join_dateTimePicker.Value = DateTime.Now;
-            birth_dateTimePicker.Value = DateTime.Now;
+            ClearFields();
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,48 +47,79 @@ namespace Project_Gym
             String lname = txt_lname.Text;
             String address = txt_address.Text;
             String email = txt_email.Text;
-            String dob = birth_dateTimePicker.Text;
-            String jdate = join_dateTimePicker.Text;
+            String dob = birth_dateTimePicker.Value.ToString("yyyy-MM-dd");
+            String jdate = join_dateTimePicker.Value.ToString("yyyy-MM-dd");
             String membership = m_comboBox.Text;
             String nic = txt_nic.Text;
-            int num = int.Parse(txt_num.Text);
-            int h = int.Parse(txt_height.Text);
-            int w = int.Parse(txt_weight.Text);
+            long num;
+            int h;
+            int w;
 
-            String gender = "";
-            bool isChecked = btn_male.Checked;
-
-            if (isChecked)
+            if (!long.TryParse(txt_num.Text, out num) || !int.TryParse(txt_height.Text, out h) || !int.TryParse(txt_weight.Text, out w))
             {
-                gender = btn_male.Text;
-            }
-            else
-            {
-                gender = btn_female.Text;
+                MessageBox.Show("Please enter valid numerical values for number, height, and weight.");
+                return;
             }
 
-            
-               SqlConnection con = new SqlConnection(@"Data Source=XOXO;Initial Catalog=GymDB;Integrated Security=false;User ID=sa;Password=test123;Connect Timeout=30");
+            String gender = btn_male.Checked ? btn_male.Text : btn_female.Text;
 
-            String qry = "INSERT INTO MEMBER (Nic,Fname,Lname,JDate,Dob,Mnumber,Gender,Membership,Height,Weight,Address,email)  VALUES ('"+nic+"','" + fname + "','" + lname + "','" + jdate + "','" + dob + "','" + num + "','"+gender+"','" + membership + "','" + h + "','" + w + "','" + address + "','"+email+"')";
-            SqlCommand cmd = new SqlCommand(qry, con);
-
-            try
+            if (gender.Length > 10) // Assuming Gender column in DB is NVARCHAR(10)
             {
-                con.Open();
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Registration Successful..");
-                con.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                con.Close();
+                MessageBox.Show("Gender value is too long.");
+                return;
             }
 
+            using (SqlConnection con = new SqlConnection(@"Data Source=DobA\DOBA;Initial Catalog=GymDB;User ID=sa;Password=Tharuksha@2001;Connect Timeout=30"))
+            {
+                using (SqlCommand cmd = new SqlCommand("InsertMember", con))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Nic", nic);
+                    cmd.Parameters.AddWithValue("@Fname", fname);
+                    cmd.Parameters.AddWithValue("@Lname", lname);
+                    cmd.Parameters.AddWithValue("@JDate", jdate);
+                    cmd.Parameters.AddWithValue("@Dob", dob);
+                    cmd.Parameters.AddWithValue("@Mnumber", num);
+                    cmd.Parameters.AddWithValue("@Gender", gender);
+                    cmd.Parameters.AddWithValue("@Membership", membership);
+                    cmd.Parameters.AddWithValue("@Height", h);
+                    cmd.Parameters.AddWithValue("@Weight", w);
+                    cmd.Parameters.AddWithValue("@Address", address);
+                    cmd.Parameters.AddWithValue("@Email", email);
+
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Registration Successful.");
+                        ClearFields(); // Clear fields after successful registration
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        private void ClearFields()
+        {
+            txt_fname.Clear();
+            txt_lname.Clear();
+            txt_address.Clear();
+            txt_email.Clear();
+            txt_num.Clear();
+            txt_weight.Clear();
+            txt_height.Clear();
+            txt_nic.Clear();
+
+            btn_male.Checked = false;
+            btn_female.Checked = false;
+
+            m_comboBox.ResetText();
+            join_dateTimePicker.Value = DateTime.Now;
+            birth_dateTimePicker.Value = DateTime.Now;
         }
     }
 }

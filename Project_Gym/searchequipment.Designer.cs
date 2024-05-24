@@ -31,9 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(searchequipment));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.labl_1 = new System.Windows.Forms.Label();
-            this.btn_delete = new System.Windows.Forms.Button();
-            this.txt_nic = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cANCELToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -59,46 +56,13 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(145, 380);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(715, 151);
             this.dataGridView1.TabIndex = 49;
-            // 
-            // labl_1
-            // 
-            this.labl_1.AutoSize = true;
-            this.labl_1.BackColor = System.Drawing.Color.Transparent;
-            this.labl_1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.labl_1.ForeColor = System.Drawing.Color.White;
-            this.labl_1.Location = new System.Drawing.Point(216, 592);
-            this.labl_1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.labl_1.Name = "labl_1";
-            this.labl_1.Size = new System.Drawing.Size(128, 25);
-            this.labl_1.TabIndex = 52;
-            this.labl_1.Text = "Search Name";
-            // 
-            // btn_delete
-            // 
-            this.btn_delete.BackColor = System.Drawing.Color.Transparent;
-            this.btn_delete.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.btn_delete.Image = ((System.Drawing.Image)(resources.GetObject("btn_delete.Image")));
-            this.btn_delete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_delete.Location = new System.Drawing.Point(676, 583);
-            this.btn_delete.Name = "btn_delete";
-            this.btn_delete.Size = new System.Drawing.Size(119, 43);
-            this.btn_delete.TabIndex = 51;
-            this.btn_delete.Text = "Delete";
-            this.btn_delete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_delete.UseVisualStyleBackColor = false;
-            // 
-            // txt_nic
-            // 
-            this.txt_nic.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txt_nic.Location = new System.Drawing.Point(363, 589);
-            this.txt_nic.Name = "txt_nic";
-            this.txt_nic.Size = new System.Drawing.Size(223, 33);
-            this.txt_nic.TabIndex = 50;
             // 
             // menuStrip1
             // 
@@ -130,9 +94,6 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1020, 673);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.labl_1);
-            this.Controls.Add(this.btn_delete);
-            this.Controls.Add(this.txt_nic);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -141,6 +102,7 @@
             this.Name = "searchequipment";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "searchequipment";
+            this.Load += new System.EventHandler(this.searchequipment_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -154,9 +116,6 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label labl_1;
-        private System.Windows.Forms.Button btn_delete;
-        private System.Windows.Forms.TextBox txt_nic;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem cANCELToolStripMenuItem;
     }
